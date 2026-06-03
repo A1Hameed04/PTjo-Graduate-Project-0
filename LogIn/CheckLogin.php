@@ -60,6 +60,9 @@ $_SESSION['user'] = [
 ];
 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
+// Track this device as an active session (for Settings → Active Sessions).
+session_track($user['id']);
+
 audit('login', 'users', $user['id']);
 
 // ── Redirect to dashboard ─────────────────────────────────────────────────────
@@ -74,6 +77,6 @@ exit;
 // ── Helper ────────────────────────────────────────────────────────────────────
 function redirect_error(string $msg): never
 {
-    header('Location: Login.html?error=' . urlencode($msg));
+    header('Location: Login.html?tab=login&error=' . urlencode($msg));
     exit;
 }

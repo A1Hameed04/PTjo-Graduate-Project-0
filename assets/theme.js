@@ -64,10 +64,13 @@ document.addEventListener('DOMContentLoaded', PTjoTheme.init);
         [data-theme="light"] [style*="#111827"]             { background-color: #f3f4f6 !important; background-image: none !important; }
 
         /* ── Tailwind slate/gray page backgrounds ───────────────────── */
-        [data-theme="light"] .bg-slate-950,
-        [data-theme="light"] .bg-slate-900                  { background-color: #f3f4f6 !important; }
-        [data-theme="light"] .bg-gray-950                   { background-color: #f3f4f6 !important; }
-        [data-theme="light"] .bg-gray-900                   { background-color: #f3f4f6 !important; }
+        /* Attribute-contains selectors so opacity variants (e.g. bg-gray-900/50,
+           bg-slate-900/60) are caught too — otherwise those recessed panels keep
+           their dark translucent fill and show up as grey boxes on light cards. */
+        [data-theme="light"] [class*="bg-slate-950"],
+        [data-theme="light"] [class*="bg-slate-900"]        { background-color: #f3f4f6 !important; background-image: none !important; }
+        [data-theme="light"] [class*="bg-gray-950"]         { background-color: #f3f4f6 !important; background-image: none !important; }
+        [data-theme="light"] [class*="bg-gray-900"]         { background-color: #f3f4f6 !important; background-image: none !important; }
 
         /* ── Cards / Containers ─────────────────────────────────────── */
         [data-theme="light"] .bg-gray-800,
@@ -153,12 +156,13 @@ document.addEventListener('DOMContentLoaded', PTjoTheme.init);
         [data-theme="light"] ::-webkit-scrollbar-thumb      { background: #d1d5db !important; }
         [data-theme="light"] ::-webkit-scrollbar-thumb:hover{ background: #9ca3af !important; }
 
-        /* ── Gray-500/600 / Slate-600/700 backgrounds ──────────────── */
+        /* ── Gray-500 / Slate-600/700 backgrounds ──────────────────── */
+        /* (bg-gray-600 is intentionally NOT re-declared here — it is set
+            to #d1d5db above so gray-600 surfaces stay distinct from the
+            #f3f4f6 page background instead of blending into it.) */
         [data-theme="light"] .bg-gray-500                   { background-color: #e5e7eb !important; }
-        [data-theme="light"] .bg-gray-600,
-        [data-theme="light"] [class*="bg-gray-600"]         { background-color: #f3f4f6 !important; }
-        [data-theme="light"] .bg-slate-600                  { background-color: #f3f4f6 !important; }
-        [data-theme="light"] .bg-slate-700                  { background-color: #f3f4f6 !important; }
+        [data-theme="light"] .bg-slate-600                  { background-color: #e5e7eb !important; }
+        [data-theme="light"] .bg-slate-700                  { background-color: #e5e7eb !important; }
 
         /* ── Ad / Sponsor / Banner / Promo cards ───────────────────── */
         [data-theme="light"] .ad-banner-glass               { background: rgba(255,255,255,0.9) !important; background-image: none !important; border-color: rgba(13,148,136,0.2) !important; backdrop-filter: none !important; }
@@ -181,6 +185,14 @@ document.addEventListener('DOMContentLoaded', PTjoTheme.init);
         /* ── data-dark-bg / data-dark-text attributes ───────────────── */
         [data-theme="light"] [data-dark-bg]                 { background-color: #f3f4f6 !important; background-image: none !important; }
         [data-theme="light"] [data-dark-text]               { color: #111827 !important; }
+
+        /* ── Theme picker preview: the "Dark" card is an illustration of dark
+              mode and must stay dark even while light mode is active. The id
+              scope outranks the global grey overrides above. ─────────────── */
+        [data-theme="light"] #card-dark [class*="bg-gray-900"] { background-color: #111827 !important; background-image: none !important; }
+        [data-theme="light"] #card-dark [class*="bg-gray-800"] { background-color: #1f2937 !important; background-image: none !important; }
+        [data-theme="light"] #card-dark [class*="bg-gray-700"] { background-color: #374151 !important; }
+        [data-theme="light"] #card-dark .text-white            { color: #ffffff !important; }
 
         /* ── Elite Crowd Sourced SVG — light mode fix ──────────────── */
         [data-theme="light"] .advantage-svg                 { background-color: #f0fdfa !important; border-radius: 12px !important; }
